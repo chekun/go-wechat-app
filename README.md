@@ -9,6 +9,7 @@
 
     - 解密 wx.getUserInfo
     - 解密 wx.getShareInfo
+    - 解密 wx.getWeRunData
 
 - 接口调用
 
@@ -42,6 +43,12 @@ func main() {
         fmr.Println("Share Ticket 解密失败 - ", decryptor.Err)
     } else {
         fmt.Println(share)
+    }
+
+    if run := decryptor.Run( "your-encrypted-data", "your-iv"); decryptor.Err != nil {
+        fmr.Println("Run Data 解密失败 - ", decryptor.Err)
+    } else {
+        fmt.Println(run)
     }
 }
 
