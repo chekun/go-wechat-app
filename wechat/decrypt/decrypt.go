@@ -4,7 +4,6 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"fmt"
 
 	"encoding/json"
 
@@ -84,10 +83,20 @@ func (decryptor *Decryptor) Share(encryptedData, iv string) *model.Share {
 	if decryptor.Err != nil {
 		return nil
 	}
-	fmt.Println(string(result))
 	var share model.Share
 	decryptor.Err = json.Unmarshal(result, &share)
 	return &share
+}
+
+//Run decrypt the encryped rundata
+func (decryptor *Decryptor) Run(encryptedData, iv string) *model.Run {
+	result := decryptor.decrypt(encryptedData, iv)
+	if decryptor.Err != nil {
+		return nil
+	}
+	var run model.Run
+	decryptor.Err = json.Unmarshal(result, &run)
+	return &run
 }
 
 func pkcs7Unpad(padBytes []byte) []byte {
